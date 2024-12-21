@@ -4,7 +4,7 @@
  "autoname": "field:short_link",
  "creation": "2024-12-21 12:43:49.300176",
  "doctype": "DocType",
- "engine": "InnoDB",
+ "engine": "MyISAM",
  "field_order": [
   "destination_url",
   "column_break_awjo",
@@ -39,8 +39,13 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2024-12-21 12:45:50.795245",
+ "links": [
+  {
+   "link_doctype": "Short Link Click",
+   "link_fieldname": "link"
+  }
+ ],
+ "modified": "2024-12-21 13:04:17.613091",
  "modified_by": "Administrator",
  "module": "LinkLite",
  "name": "Short Link",
