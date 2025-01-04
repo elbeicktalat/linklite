@@ -44,6 +44,9 @@
 						...newLink
 					}, {
 						onSuccess() {
+							newLink.short_link = ''
+							newLink.description = ''
+							newLink.destination_url = ''
 							close();
 						}
 					})
