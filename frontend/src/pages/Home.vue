@@ -32,7 +32,11 @@
 
 	:options="{
 		showTooltip: false,
-		selectable: false
+		selectable: false,
+		onRowClick: (row) => {
+			editDialogShown = true
+			Object.assign(newLink, row)
+		}
 	}"
 	 />
 
@@ -85,6 +89,61 @@
 			<ErrorMessage class="mt-2" :message="links.insert.error" />
 		</template>
 	 </Dialog>
+
+
+	 <Dialog :options="{
+		title: 'Edit Link',
+		size: 'xl',
+		actions: [
+			{
+				label: 'Save',
+				variant: 'solid',
+				onClick(close) {
+					// links.insert.submit({
+					// 	...newLink
+					// }, {
+					// 	onSuccess() {
+					// 		newLink.short_link = ''
+					// 		newLink.description = ''
+					// 		newLink.destination_url = ''
+					// 		close();
+					// 	}
+					// })
+				}
+			},
+			{
+				label: 'Delete',
+				variant: 'outline',
+				theme: 'red',
+				onClick(close) {
+					links.delete.submit(newLink.name, {
+						onSuccess() {
+							close();
+						}
+					})
+				}
+			}
+		]
+	 }" v-model="editDialogShown">
+		<template #body-content>
+			<form class="space-y-3">
+				<FormControl
+					type="text"
+					label="Destination URL"
+					placeholder="https://youtube.com/@buildwithhussain"
+					v-model="newLink.destination_url"
+				/>
+
+				<FormControl
+					type="textarea"
+					label="Description"
+					v-model="newLink.description"
+				/>
+			</form>
+
+			<ErrorMessage class="mt-2" :message="links.insert.error" />
+		</template>
+	 </Dialog>
   </div>
 </template>
 
@@ -96,6 +155,7 @@ import { createListResource } from 'frappe-ui'
 import { reactive } from 'vue'
 
 const createDialogShown = ref(false)
+const editDialogShown = ref(false)
 const newLink = reactive({
 	short_link: '',
 	destination_url: '',
