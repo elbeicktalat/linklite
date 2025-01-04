@@ -99,16 +99,18 @@
 				label: 'Save',
 				variant: 'solid',
 				onClick(close) {
-					// links.insert.submit({
-					// 	...newLink
-					// }, {
-					// 	onSuccess() {
-					// 		newLink.short_link = ''
-					// 		newLink.description = ''
-					// 		newLink.destination_url = ''
-					// 		close();
-					// 	}
-					// })
+					links.setValue.submit({
+						name: newLink.name,
+						description: newLink.description,
+						destination_url: newLink.destination_url
+					}, {
+						onSuccess() {
+							newLink.short_link = ''
+							newLink.description = ''
+							newLink.destination_url = ''
+							close();
+						}
+					})
 				}
 			},
 			{
