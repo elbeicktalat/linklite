@@ -8,6 +8,9 @@ app_license = "agpl-3.0"
 
 website_path_resolver = "linklite.utils.path_resolver"
 
+
+website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
+
 # Apps
 # ------------------
 
