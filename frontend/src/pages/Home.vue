@@ -3,7 +3,12 @@
 
 	<div class="flex items-baseline justify-between mb-4">
 		<h2 class=" text-gray-900 font-semibold">Links</h2>
-		<Button variant="solid" @click="createDialogShown = true">Create</Button>
+		<Button variant="solid" @click="createDialogShown = true">
+			Create Link
+			<template #suffix>
+				<span class=" font-mono bg-white/80 text-gray-700 rounded-sm px-1">C</span>
+			</template>
+		</Button>
 	</div>
 
 	<ListView
@@ -12,7 +17,7 @@
 	:columns="[{
 		label: 'Short Link',
 		key: 'name',
-		width: 0.4
+		width: 0.3
 	},
 	{
 		label: 'Destination',
@@ -85,6 +90,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { onKeyStroke } from '@vueuse/core'
 import { ListView, Dialog, FormControl, ErrorMessage } from 'frappe-ui'
 import { createListResource } from 'frappe-ui'
 import { reactive } from 'vue'
@@ -94,6 +100,10 @@ const newLink = reactive({
 	short_link: '',
 	destination_url: '',
 	description: ''
+})
+
+onKeyStroke(['c', 'C'], () => {
+	createDialogShown.value = true;
 })
 
 const links = createListResource({
