@@ -12,31 +12,33 @@
 	</div>
 
 	<ListView
-	v-if="links.list.data"
-	rowKey="name"
-	:columns="[{
-		label: 'Short Link',
-		key: 'name',
-		width: 0.3
-	},
-	{
-		label: 'Destination',
-		key: 'destination_url'
-	},
-	{
-		label: 'Description',
-		key: 'description'
-	}]"
+		v-if="links.list.data"
+		rowKey="name"
+		:columns="[{
+			label: 'Short Link',
+			key: 'name',
+			width: 0.3
+		},
+		{
+			label: 'Destination',
+			key: 'destination_url'
+		},
+		{
+			key: 'copy_to_clipboard'
+		},
+		{
+			key: 'more_actions'
+		},]"
 
 	:rows="links.list.data"
 
 	:options="{
 		showTooltip: false,
 		selectable: false,
-		onRowClick: (row) => {
-			editDialogShown = true
-			Object.assign(newLink, row)
-		},
+		// onRowClick: (row) => {
+		// 	editDialogShown = true
+		// 	Object.assign(newLink, row)
+		// },
 		emptyState: {
 			title: 'No links found',
 			description: 'Create a new short link to get started',
@@ -49,7 +51,31 @@
 			},
 		}
 	}"
-	 />
+	 >
+	 <template #cell="{ item, row, column }">
+		<Button v-if="column.key === 'copy_to_clipboard'" class="cursor-pointer" icon="copy" @click.stop="copyShortLinkToClipboard(row.name)" variant="outline" theme="blue"></Button>
+
+		<Dropdown
+			v-else-if="column.key === 'more_actions'"
+			:options="[
+				{'label': 'Show QR Code', onClick: () => {
+					if (!row.qr_code) {
+						toast.warning('No QR Code found!')
+						return;
+					}
+					qrCodeLink = row.qr_code;
+					qrCodeShown = true;
+				}}
+			]"
+			>
+			<Button icon="more-horizontal" />
+		</Dropdown>
+
+      	<span v-else class="font-medium text-ink-gray-7">
+        	{{ item }}
+      	</span>
+    </template>
+	</ListView>
 
 
 	 <Dialog :options="{
@@ -147,19 +173,36 @@
 			<ErrorMessage class="mt-2" :message="links.insert.error" />
 		</template>
 	 </Dialog>
+
+
+	 <Dialog
+	 	v-model="qrCodeShown"
+		:options="{
+			title: 'QR Code'
+		}"
+	  >
+	  <template #body-content>
+		<div class="flex justify-center items-center">
+			<img v-if="qrCodeLink" :src="qrCodeLink" alt="QR Code for short link">
+		</div>
+	  </template>
+	</Dialog>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { onKeyStroke } from "@vueuse/core";
-import { ListView, Dialog, FormControl, ErrorMessage } from "frappe-ui";
+import { ListView, Dialog, FormControl, ErrorMessage, Dropdown } from "frappe-ui";
 import { createListResource } from "frappe-ui";
 import { reactive } from "vue";
 import { toast } from 'vue-sonner'
 
 const createDialogShown = ref(false);
 const editDialogShown = ref(false);
+const qrCodeShown = ref(false);
+const qrCodeLink = ref(null);
+
 const newLink = reactive({
 	short_link: "",
 	destination_url: "",
@@ -172,7 +215,7 @@ onKeyStroke(["c", "C"], () => {
 
 const links = createListResource({
 	doctype: "Short Link",
-	fields: ["name", "destination_url", "description"],
+	fields: ["name", "destination_url", "description", "qr_code"],
 	orderBy: "creation desc",
 });
 
@@ -188,11 +231,15 @@ function createShortLink(close) {
 				newLink.short_link = "";
 				newLink.description = "";
 				newLink.destination_url = "";
-				navigator.clipboard.writeText(`${window.location.origin}/${newLink.short_link}`);
-				toast.success("Link copied to clipboard!")
+				copyShortLinkToClipboard(newLink.short_link)
 				close();
 			},
 		},
 	);
+}
+
+function copyShortLinkToClipboard(text) {
+	navigator.clipboard.writeText(`${window.location.origin}/${text}`);
+	toast.success("Link copied to clipboard!")
 }
 </script>
