@@ -11,6 +11,17 @@ website_path_resolver = "linklite.utils.path_resolver"
 
 website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
 
+export_python_type_annotations = True
+
+fixtures = [
+    {
+        "dt": "Blacklisted Slug",
+        "filters": {
+			"name": ("in", ("apps", "app"))
+		}
+	}
+]
+
 # Apps
 # ------------------
 
@@ -245,7 +256,7 @@ website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': '
 # ]
 
 # Automatically update python controller files with type annotations for this app.
-export_python_type_annotations = True
+
 
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
