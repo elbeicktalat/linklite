@@ -36,6 +36,17 @@
 		onRowClick: (row) => {
 			editDialogShown = true
 			Object.assign(newLink, row)
+		},
+		emptyState: {
+			title: 'No links found',
+			description: 'Create a new short link to get started',
+			button: {
+				label: 'New Link',
+				variant: 'solid',
+				onClick: () => {
+					createDialogShown = true;
+				},
+			},
 		}
 	}"
 	 />
@@ -70,6 +81,7 @@
 					label="Destination URL"
 					placeholder="https://youtube.com/@buildwithhussain"
 					v-model="newLink.destination_url"
+					autofocus
 				/>
 
 				<FormControl
@@ -150,29 +162,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { onKeyStroke } from '@vueuse/core'
-import { ListView, Dialog, FormControl, ErrorMessage } from 'frappe-ui'
-import { createListResource } from 'frappe-ui'
-import { reactive } from 'vue'
+import { ref } from "vue";
+import { onKeyStroke } from "@vueuse/core";
+import { ListView, Dialog, FormControl, ErrorMessage } from "frappe-ui";
+import { createListResource } from "frappe-ui";
+import { reactive } from "vue";
 
-const createDialogShown = ref(false)
-const editDialogShown = ref(false)
+const createDialogShown = ref(false);
+const editDialogShown = ref(false);
 const newLink = reactive({
-	short_link: '',
-	destination_url: '',
-	description: ''
-})
+	short_link: "",
+	destination_url: "",
+	description: "",
+});
 
-onKeyStroke(['c', 'C'], () => {
+onKeyStroke(["c", "C"], () => {
+	console.log("c pressed");
 	createDialogShown.value = true;
-})
+});
 
 const links = createListResource({
-	doctype: 'Short Link',
-	fields: ['name', 'destination_url', 'description'],
-	 orderBy: 'creation desc'
-})
+	doctype: "Short Link",
+	fields: ["name", "destination_url", "description"],
+	orderBy: "creation desc",
+});
 
-links.fetch()
+links.fetch();
 </script>
