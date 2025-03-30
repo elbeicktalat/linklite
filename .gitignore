@@ -53,3 +53,8 @@ jspm_packages/
 
 # Aider AI Chat
 .aider*
+
+linklite/public/frontend
+linklite/public/node_modules
+node_modules/
+linklite/www/frontend.html
