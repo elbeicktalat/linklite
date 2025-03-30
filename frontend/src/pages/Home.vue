@@ -59,18 +59,7 @@
 			{
 				label: 'Create',
 				variant: 'solid',
-				onClick(close) {
-					links.insert.submit({
-						...newLink
-					}, {
-						onSuccess() {
-							newLink.short_link = ''
-							newLink.description = ''
-							newLink.destination_url = ''
-							close();
-						}
-					})
-				}
+				onClick: createShortLink
 			}
 		]
 	 }" v-model="createDialogShown">
@@ -167,6 +156,7 @@ import { onKeyStroke } from "@vueuse/core";
 import { ListView, Dialog, FormControl, ErrorMessage } from "frappe-ui";
 import { createListResource } from "frappe-ui";
 import { reactive } from "vue";
+import { toast } from 'vue-sonner'
 
 const createDialogShown = ref(false);
 const editDialogShown = ref(false);
@@ -177,7 +167,6 @@ const newLink = reactive({
 });
 
 onKeyStroke(["c", "C"], () => {
-	console.log("c pressed");
 	createDialogShown.value = true;
 });
 
@@ -188,4 +177,22 @@ const links = createListResource({
 });
 
 links.fetch();
+
+function createShortLink(close) {
+	links.insert.submit(
+		{
+			...newLink,
+		},
+		{
+			onSuccess() {
+				newLink.short_link = "";
+				newLink.description = "";
+				newLink.destination_url = "";
+				navigator.clipboard.writeText(`${window.location.origin}/${newLink.short_link}`);
+				toast.success("Link copied to clipboard!")
+				close();
+			},
+		},
+	);
+}
 </script>
