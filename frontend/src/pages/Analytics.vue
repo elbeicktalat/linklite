@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2 class="font-bold text-gray-800">Analytics</h2>
+		<h2 class="font-bold text-ink-gray-8">Analytics</h2>
 	</div>
 	<div class="grid grid-cols-5 justify-start items-start">
 		<NumberChart
