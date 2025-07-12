@@ -28,15 +28,15 @@ fixtures = [
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "linklite",
-# 		"logo": "/assets/linklite/logo.png",
-# 		"title": "LinkLite",
-# 		"route": "/linklite",
-# 		"has_permission": "linklite.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "linklite",
+		"logo": "/assets/linklite/logo.png",
+		"title": "Link Lite",
+		"route": "/frontend",
+		"has_permission": "linklite.linklite.utils.permissions.has_app_permission"
+	}
+]
 
 # Includes in <head>
 # ------------------
