@@ -7,10 +7,15 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import('@/pages/Home.vue'),
+  },
+  {
+	path: '/analytics',
+	name: 'Analytics',
+	component: () => import('@/pages/Analytics.vue'),
   }
 ]
 
-let router = createRouter({
+const router = createRouter({
   history: createWebHistory('/frontend'),
   routes,
 })

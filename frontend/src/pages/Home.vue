@@ -1,5 +1,5 @@
 <template>
-  <div class="m-5">
+
 
 	<div class="flex items-baseline justify-between mb-4">
 		<h2 class=" text-gray-900 font-semibold">Links</h2>
@@ -187,7 +187,6 @@
 		</div>
 	  </template>
 	</Dialog>
-  </div>
 </template>
 
 <script setup>
