@@ -1,22 +1,40 @@
-import path from 'path'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import frappeui from 'frappe-ui/vite'
+import path from "node:path"
+import vue from "@vitejs/plugin-vue"
+import frappeui from "frappe-ui/vite"
+import { defineConfig } from "vite"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [frappeui(), vue()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
-  },
-  build: {
-    outDir: `../${path.basename(path.resolve('..'))}/public/frontend`,
-    emptyOutDir: true,
-    target: 'es2015',
-  },
-  optimizeDeps: {
-    include: ['frappe-ui > feather-icons', 'showdown', 'engine.io-client'],
-  },
+	plugins: [
+		frappeui({
+			frappeProxy: true,
+			jinjaBootData: true,
+			lucideIcons: true,
+			buildConfig: {
+				indexHtmlPath: "../linklite/www/frontend.html",
+				emptyOutDir: true,
+				sourcemap: true,
+			},
+		}),
+		vue(),
+	],
+	build: {
+		chunkSizeWarningLimit: 1500,
+		outDir: "../linklite/public/frontend",
+		emptyOutDir: true,
+		target: "es2015",
+		sourcemap: true,
+	},
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "src"),
+			"tailwind.config.js": path.resolve(__dirname, "tailwind.config.js"),
+		},
+	},
+	optimizeDeps: {
+		include: ["feather-icons", "showdown", "highlight.js/lib/core"],
+	},
+	server: {
+		allowedHosts: true,
+	},
 })
