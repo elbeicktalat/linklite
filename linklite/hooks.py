@@ -103,7 +103,7 @@ add_to_apps_screen = [
 # ------------
 
 # before_install = "linklite.install.before_install"
-# after_install = "linklite.install.after_install"
+after_install = "linklite.install.after_install"
 
 # Uninstallation
 # ------------
