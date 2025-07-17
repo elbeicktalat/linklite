@@ -2,7 +2,7 @@
 
 
 	<div class="flex items-baseline justify-between mb-4">
-		<h2 class=" text-gray-900 font-semibold">Links</h2>
+		<h2 class="text-ink-gray-9 font-semibold">Links</h2>
 		<Button variant="solid" @click="createDialogShown = true">
 			Create Link
 			<template #suffix>
