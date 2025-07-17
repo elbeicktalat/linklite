@@ -2,6 +2,7 @@
 	<div class="flex h-screen w-full flex-row bg-surface-white shadow">
 		<Sidebar :header="{
 			title: 'LinkLite',
+			logo: '/assets/linklite/logo.png',
 			menuItems: [ { label: 'Toggle Theme', icon: Moon, onClick: toggleTheme },]
 		}"
 
@@ -21,14 +22,23 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+import { Sidebar } from 'frappe-ui';
 import Moon from '~icons/lucide/moon';
 import Link from "~icons/lucide/link";
+import { useStorage } from '@vueuse/core'
 import ChartColumn from "~icons/lucide/chart-column";
-import { Sidebar } from 'frappe-ui';
+
+const userTheme = useStorage('user-theme', 'light');
+
+onMounted(() => {
+  document.documentElement.setAttribute('data-theme', userTheme.value);
+});
 
 function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const currentTheme = userTheme.value;
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', newTheme);
+  userTheme.value = newTheme;
 }
 </script>
