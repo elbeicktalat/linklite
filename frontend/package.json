@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/assets/linklite/frontend/ && yarn copy-html-entry",
-    "preview": "vite preview",
-    "copy-html-entry": "cp ../linklite/public/frontend/index.html ../linklite/www/frontend.html"
+    "copy-html-entry": "cp ../linklite/public/frontend/index.html ../linklite/www/links.html"
   },
   "dependencies": {
     "feather-icons": "^4.29.2",

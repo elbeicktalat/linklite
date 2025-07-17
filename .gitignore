@@ -57,4 +57,4 @@ jspm_packages/
 linklite/public/frontend
 linklite/public/node_modules
 node_modules/
-linklite/www/frontend.html
+linklite/www/links.html

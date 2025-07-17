@@ -33,7 +33,7 @@ add_to_apps_screen = [
 		"name": "linklite",
 		"logo": "/assets/linklite/logo.png",
 		"title": "Link Lite",
-		"route": "/frontend",
+		"route": "/links",
 		"has_permission": "linklite.linklite.utils.permissions.has_app_permission"
 	}
 ]

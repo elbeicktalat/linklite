@@ -11,7 +11,7 @@ export default defineConfig({
 			jinjaBootData: true,
 			lucideIcons: true,
 			buildConfig: {
-				indexHtmlPath: "../linklite/www/frontend.html",
+				indexHtmlPath: "../linklite/www/links.html",
 				emptyOutDir: true,
 				sourcemap: true,
 			},

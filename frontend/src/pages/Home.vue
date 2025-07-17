@@ -35,10 +35,6 @@
 	:options="{
 		showTooltip: false,
 		selectable: false,
-		// onRowClick: (row) => {
-		// 	editDialogShown = true
-		// 	Object.assign(newLink, row)
-		// },
 		emptyState: {
 			title: 'No links found',
 			description: 'Create a new short link to get started',
