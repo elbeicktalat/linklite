@@ -33,7 +33,7 @@ class ShortLink(Document):
 		import qrcode
 		import io
 
-		img = qrcode.make(f"http://{frappe.local.site}:{frappe.conf.webserver_port}/{self.short_link}")
+		img = qrcode.make(f"{frappe.utils.get_url()}/{self.short_link}")
 		output = io.BytesIO()
 		img.save(output, format="PNG")
 		hex_data = output.getvalue()
